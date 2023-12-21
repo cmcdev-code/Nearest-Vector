@@ -52,6 +52,8 @@ class GaleShapelyAlgorithm
 
         void match();
 
+        void print_matchings();
+
         ~GaleShapelyAlgorithm();
     
     private:
@@ -64,7 +66,6 @@ class GaleShapelyAlgorithm
         int matchingsAtoB[T];
         int matchingsBtoA[T];
 
-        Stack<T> stack_of_A;
         Stack<T> unmatched;
 
 };

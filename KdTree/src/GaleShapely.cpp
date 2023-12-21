@@ -1,6 +1,7 @@
 #include "GaleShapely.hpp"
 #include <algorithm>
 #include <random>
+#include <iostream>
 
 template <size_t T>
 A<T>::A()
@@ -89,9 +90,10 @@ GaleShapelyAlgorithm<T>::~GaleShapelyAlgorithm()
 template <size_t T>
 void GaleShapelyAlgorithm<T>::match()
 {
-
+    int iterations = 0;
     while (this->unmatched.getSize() != 0)
     {
+        iterations++;
         int a = this->unmatched.pop();
         int b = this->setA[a]->preferences[this->setA[a]->last_chosen++];
         if (this->matchingsBtoA[b] == -1)
@@ -106,7 +108,7 @@ void GaleShapelyAlgorithm<T>::match()
                 this->unmatched.push(this->matchingsBtoA[b]);
                 this->matchingsAtoB[a] = b;
                 this->matchingsBtoA[b] = a;
-                
+
             }
             else
             {
@@ -114,6 +116,17 @@ void GaleShapelyAlgorithm<T>::match()
             }
         }
     }
+    std::cout << "iterations: " << iterations << std::endl;
 }
+
+template <size_t T>
+void GaleShapelyAlgorithm<T>::print_matchings()
+{
+    for (int i = 0; i < T; i++)
+    {
+        std::cout << i << " " << this->matchingsAtoB[i] << std::endl;
+    }
+}
+
 
 template class GaleShapelyAlgorithm<NUMBER_OF_PREFERENCES>;
