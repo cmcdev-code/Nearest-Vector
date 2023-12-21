@@ -43,6 +43,28 @@ GaleShapelyAlgorithm<T>::GaleShapelyAlgorithm()
 }
 
 template <size_t T>
+void Stack_of_A<T>::push(int index){
+    this->index_of_unmatched[this->top]=index;
+    this->top++;
+}
+
+template <size_t T>
+int Stack_of_A<T>::pop(){
+    this->top--;
+    return this->index_of_unmatched[this->top];
+}
+
+template<size_t T>
+int Stack_of_A<T>::getSize(){
+    return this->top;
+}
+
+
+
+template class Stack_of_A<NUMBER_OF_PREFERENCES>;
+
+
+template <size_t T>
 GaleShapelyAlgorithm<T>::~GaleShapelyAlgorithm()
 {
     for (int i = 0; i < T; i++)
