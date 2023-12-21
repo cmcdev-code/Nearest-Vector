@@ -3,10 +3,9 @@
 #include <random>
 #include <iostream>
 
-template <size_t T>
-A<T>::A()
+A::A()
 {
-    for (int i = 0; i < T; i++)
+    for (int i = 0; i < NUMBER_OF_PREFERENCES; i++)
     {
         this->preferences[i] = i;
     }
@@ -14,19 +13,17 @@ A<T>::A()
     std::random_device rd;
     std::mt19937 g(rd());
 
-    std::shuffle(this->preferences, this->preferences + T, g);
+    std::shuffle(this->preferences, this->preferences + NUMBER_OF_PREFERENCES, g);
 
-    for (int i = 0; i < T; i++)
+    for (int i = 0; i < NUMBER_OF_PREFERENCES; i++)
     {
         this->inverse_preferences[this->preferences[i]] = i;
     }
 }
-template class A<NUMBER_OF_PREFERENCES>;
 
-template <size_t T>
-B<T>::B()
+B::B()
 {
-    for (int i = 0; i < T; i++)
+    for (int i = 0; i < NUMBER_OF_PREFERENCES; i++)
     {
         this->preferences[i] = i;
     }
@@ -34,61 +31,52 @@ B<T>::B()
     std::random_device rd;
     std::mt19937 g(rd());
 
-    std::shuffle(this->preferences, this->preferences + T, g);
-    for (int i = 0; i < T; i++)
+    std::shuffle(this->preferences, this->preferences + NUMBER_OF_PREFERENCES, g);
+    for (int i = 0; i < NUMBER_OF_PREFERENCES; i++)
     {
         this->inverse_preferences[this->preferences[i]] = i;
     }
 }
-template class B<NUMBER_OF_PREFERENCES>;
 
-template <size_t T>
-void Stack<T>::push(int index)
+void Stack::push(int index)
 {
     this->index_of_unmatched[this->top] = index;
     this->top++;
 }
 
-template <size_t T>
-int Stack<T>::pop()
+int Stack::pop()
 {
     this->top--;
     return this->index_of_unmatched[this->top];
 }
 
-template <size_t T>
-int Stack<T>::getSize()
+int Stack::getSize()
 {
     return this->top;
 }
 
-template class Stack<NUMBER_OF_PREFERENCES>;
-
-template <size_t T>
-GaleShapelyAlgorithm<T>::GaleShapelyAlgorithm()
+GaleShapelyAlgorithm::GaleShapelyAlgorithm()
 {
-    for (int i = 0; i < T; i++)
+    for (int i = 0; i < NUMBER_OF_PREFERENCES; i++)
     {
-        this->setA[i] = new A<T>();
-        this->setB[i] = new B<T>();
+        this->setA[i] = new A();
+        this->setB[i] = new B();
         this->unmatched.push(i);
         this->matchingsAtoB[i] = -1;
         this->matchingsBtoA[i] = -1;
     }
 }
 
-template <size_t T>
-GaleShapelyAlgorithm<T>::~GaleShapelyAlgorithm()
+GaleShapelyAlgorithm::~GaleShapelyAlgorithm()
 {
-    for (int i = 0; i < T; i++)
+    for (int i = 0; i < NUMBER_OF_PREFERENCES; i++)
     {
         delete this->setA[i];
         delete this->setB[i];
     }
 }
 
-template <size_t T>
-void GaleShapelyAlgorithm<T>::match()
+void GaleShapelyAlgorithm::match()
 {
     int iterations = 0;
     while (this->unmatched.getSize() != 0)
@@ -103,15 +91,16 @@ void GaleShapelyAlgorithm<T>::match()
         }
         else // some other pair exists
         {
-            if (this->setB[b]->inverse_preferences[a] > this->setB[b]->inverse_preferences[this->matchingsBtoA[b]]) // if b prefers a to its current match
+            // if b prefers a to its current match
+            if (this->setB[b]->inverse_preferences[a] > this->setB[b]->inverse_preferences[this->matchingsBtoA[b]])
             {
                 this->unmatched.push(this->matchingsBtoA[b]);
                 this->matchingsAtoB[a] = b;
                 this->matchingsBtoA[b] = a;
-
             }
             else
             {
+
                 this->unmatched.push(a);
             }
         }
@@ -119,14 +108,45 @@ void GaleShapelyAlgorithm<T>::match()
     std::cout << "iterations: " << iterations << std::endl;
 }
 
-template <size_t T>
-void GaleShapelyAlgorithm<T>::print_matchings()
+void GaleShapelyAlgorithm::print_matchings()
 {
-    for (int i = 0; i < T; i++)
+    for (int i = 0; i < NUMBER_OF_PREFERENCES; i++)
     {
         std::cout << i << " " << this->matchingsAtoB[i] << std::endl;
     }
 }
 
+bool GaleShapelyAlgorithm::all_matchings_stable()
+{
+    for (int b = 0; b < NUMBER_OF_PREFERENCES; ++b)
+    {
+        int a = this->matchingsBtoA[b];
+        if (a != -1)
+        {
+            
+            for (int i = 0; i < NUMBER_OF_PREFERENCES; ++i)
+            {
+                int a_prime = this->matchingsBtoA[b];
+                int b_prime = this->matchingsAtoB[a_prime];
 
-template class GaleShapelyAlgorithm<NUMBER_OF_PREFERENCES>;
+                if (this->setA[a_prime]->inverse_preferences[b] > this->setA[a_prime]->inverse_preferences[b_prime] &&
+                    this->setB[b]->inverse_preferences[a] > this->setB[b]->inverse_preferences[a_prime])
+                {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+
+A *GaleShapelyAlgorithm::getA(int index)
+{
+    return this->setA[index];
+}
+
+B *GaleShapelyAlgorithm::getB(int index)
+{
+    return this->setB[index];
+}

@@ -3,69 +3,70 @@
 
 #ifndef NUMBER_OF_PREFERENCES
 
-    #define NUMBER_OF_PREFERENCES 10
+#define NUMBER_OF_PREFERENCES 10
 
 #endif
 
-template <size_t T>
+
 class A
 {
 
-    public:
-        A();
-        int last_chosen=-1;
-        int preferences[T];
-        int inverse_preferences[T];
+public:
+    A();
+    int last_chosen = -1;
+    int preferences[NUMBER_OF_PREFERENCES];
+    int inverse_preferences[NUMBER_OF_PREFERENCES];
 };
 
-template <size_t T>
+
 class B
 {
 
-    public:
-        B();
-        int preferences[T];
-        int inverse_preferences[T];
+public:
+    B();
+    int preferences[NUMBER_OF_PREFERENCES];
+    int inverse_preferences[NUMBER_OF_PREFERENCES];
 };
 
-template <size_t T>
+
 class Stack
 {
-    public:
-        void push(int index);
-        int pop();
-        int getSize();
+public:
+    void push(int index);
+    int pop();
+    int getSize();
 
-    private:
-        int index_of_unmatched[T];
-        int top=0;
+private:
+    int index_of_unmatched[NUMBER_OF_PREFERENCES];
+    int top = 0;
 };
 
 
-
-
-template <size_t T>
 class GaleShapelyAlgorithm
 {
-    public:
-        GaleShapelyAlgorithm();
+public:
+    GaleShapelyAlgorithm();
 
-        void match();
+    void match();
 
-        void print_matchings();
+    void print_matchings();
+    A *getA(int index);
+    B *getB(int index);
 
-        ~GaleShapelyAlgorithm();
-    
-    private:
-        A<T> *setA[T];
-        B<T> *setB[T];
 
-        //Denotes a matching from A to B where 
-        //The index of the array 'matching' denotes the A'th person is matched to the B'th person
-        //they are bidirectionally matched
-        int matchingsAtoB[T];
-        int matchingsBtoA[T];
+    bool all_matchings_stable();
 
-        Stack<T> unmatched;
+    ~GaleShapelyAlgorithm();
 
+private:
+    A *setA[NUMBER_OF_PREFERENCES];
+    B *setB[NUMBER_OF_PREFERENCES];
+
+    // Denotes a matching from A to B where
+    // The index of the array 'matching' denotes the A'th person is matched to the B'th person
+    // they are bidirectionally matched
+    int matchingsAtoB[NUMBER_OF_PREFERENCES];
+    int matchingsBtoA[NUMBER_OF_PREFERENCES];
+
+    Stack unmatched;
 };
