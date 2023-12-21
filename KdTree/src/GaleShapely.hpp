@@ -15,6 +15,7 @@ class A
         A();
         int last_chosen=-1;
         int preferences[T];
+        int inverse_preferences[T];
 };
 
 template <size_t T>
@@ -24,10 +25,11 @@ class B
     public:
         B();
         int preferences[T];
+        int inverse_preferences[T];
 };
 
 template <size_t T>
-class Stack_of_A
+class Stack
 {
     public:
         void push(int index);
@@ -47,11 +49,22 @@ class GaleShapelyAlgorithm
 {
     public:
         GaleShapelyAlgorithm();
-        ~GaleShapelyAlgorithm();
 
+        void match();
+
+        ~GaleShapelyAlgorithm();
     
     private:
         A<T> *setA[T];
         B<T> *setB[T];
-        Stack_of_A<T> stack_of_A;
+
+        //Denotes a matching from A to B where 
+        //The index of the array 'matching' denotes the A'th person is matched to the B'th person
+        //they are bidirectionally matched
+        int matchingsAtoB[T];
+        int matchingsBtoA[T];
+
+        Stack<T> stack_of_A;
+        Stack<T> unmatched;
+
 };
