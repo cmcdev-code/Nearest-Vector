@@ -106,6 +106,7 @@ void GaleShapelyAlgorithm<T>::match()
                 this->unmatched.push(this->matchingsBtoA[b]);
                 this->matchingsAtoB[a] = b;
                 this->matchingsBtoA[b] = a;
+                
             }
             else
             {
