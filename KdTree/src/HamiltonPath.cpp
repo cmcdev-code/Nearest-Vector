@@ -2,7 +2,9 @@
 
 
 
-
+void HamiltonPathStableMarriage::match(){
+    
+}
 
 
 HamiltonPathStableMarriage::HamiltonPathStableMarriage(){

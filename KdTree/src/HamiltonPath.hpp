@@ -8,6 +8,8 @@ class HamiltonPathStableMarriage{
     HamiltonPathStableMarriage();
     ~HamiltonPathStableMarriage();
 
+    void match();
+    
 
 
 
