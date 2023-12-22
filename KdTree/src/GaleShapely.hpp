@@ -24,6 +24,7 @@ class B
 
     public:
         B();
+        int last_chosen = -1;
         int preferences[NUMBER_OF_PREFERENCES];
         int inverse_preferences[NUMBER_OF_PREFERENCES];
 };

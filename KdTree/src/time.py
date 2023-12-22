@@ -5,7 +5,7 @@ import numpy as np
 
 NUMBER_OF_RUNS = 10
 PREFERENCES_START = 10
-PREFERENCES_END = 3000
+PREFERENCES_END = 1000
 PREFERENCES_STEP = 50
 
 cpp_source_file = "main.cpp"
@@ -13,7 +13,7 @@ cpp_executable = "a"
 data = {}
 
 for preferences in range(PREFERENCES_START, PREFERENCES_END + 1, PREFERENCES_STEP):
-    compile_command = f"g++ -D NUMBER_OF_PREFERENCES={preferences} {cpp_source_file} GaleShapely.cpp -o {cpp_executable}.out"
+    compile_command = f"g++ -D NUMBER_OF_PREFERENCES={preferences} {cpp_source_file} GaleShapely.cpp HamiltonPath.cpp -o {cpp_executable}.out"
     subprocess.run(compile_command, shell=True)
 
     preferences_times = []

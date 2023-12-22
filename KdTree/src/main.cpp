@@ -34,9 +34,9 @@ int main()
     GaleShapelyAlgorithm testing;
     testing.match();
 
-
-    std::cout << "All matchings stable: " << testing.all_matchings_stable() << std::endl;
-
+    print_preferences(testing);
+    std::cout << "All matchings stable: " << (testing.all_matchings_stable()? "true":"false" )<< std::endl;
+    testing.print_matchings();
 
     return 0;
 }
