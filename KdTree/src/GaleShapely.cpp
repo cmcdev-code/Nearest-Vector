@@ -118,13 +118,13 @@ void GaleShapelyAlgorithm::print_matchings()
 
 bool GaleShapelyAlgorithm::all_matchings_stable()
 {
-    for (int b = 0; b < NUMBER_OF_PREFERENCES; ++b)
+    for (int b = 0; b < NUMBER_OF_PREFERENCES; b++)
     {
         int a = this->matchingsBtoA[b];
         if (a != -1)
         {
             
-            for (int i = 0; i < NUMBER_OF_PREFERENCES; ++i)
+            for (int i = 0; i < NUMBER_OF_PREFERENCES; i++)
             {
                 int a_prime = this->matchingsBtoA[b];
                 int b_prime = this->matchingsAtoB[a_prime];

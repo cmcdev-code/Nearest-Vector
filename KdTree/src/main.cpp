@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-//print all preferences of A and B
+
 void print_preferences(GaleShapelyAlgorithm &testing)
 {
     for (int i = 0; i < NUMBER_OF_PREFERENCES; i++)
@@ -34,10 +34,6 @@ int main()
     GaleShapelyAlgorithm testing;
     testing.match();
 
-
-   // testing.print_matchings();
-
-   // print_preferences(testing);
 
     std::cout << "All matchings stable: " << testing.all_matchings_stable() << std::endl;
 
